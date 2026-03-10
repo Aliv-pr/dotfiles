@@ -38,13 +38,5 @@ fi
 # Manjaro
 if [[ "$DISTRO" == "manjaro" ]]; then
   HAS_WIDECHARS="false"
-
-  if [[ -e /usr/share/zsh/manjaro-zsh-config ]]; then
-    source /usr/share/zsh/manjaro-zsh-config
-  fi
-
-  if [[ -e /usr/share/zsh/manjaro-zsh-prompt ]]; then
-    source /usr/share/zsh/manjaro-zsh-prompt
-  fi
 fi
 
