@@ -21,7 +21,7 @@ USE_POWERLINE="true"
 # -----------------------------
 export ZSH="$HOME/.oh-my-zsh"
 
-ZSH_THEME="lambda"
+ZSH_THEME="eastwood"
 
 plugins=(
   git
