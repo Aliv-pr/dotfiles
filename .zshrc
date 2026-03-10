@@ -1,28 +1,50 @@
-# Uso de powerline
-USE_POWERLINE="true"
-
-# Alias importantes
-alias dotfiles='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
-
+# -----------------------------
 # Detectar distribución
+# -----------------------------
 if [[ -f /etc/os-release ]]; then
   source /etc/os-release
   DISTRO=$ID
 fi
 
+# -----------------------------
+# Alias importantes
+# -----------------------------
+alias dotfiles='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 
-# Configuración especifica para manjaro
+# -----------------------------
+# Powerline
+# -----------------------------
+USE_POWERLINE="true"
+
+# -----------------------------
+# Oh My Zsh
+# -----------------------------
+export ZSH="$HOME/.oh-my-zsh"
+
+ZSH_THEME="robbyrussell"
+
+plugins=(
+  git
+)
+
+if [[ -d "$ZSH" ]]; then
+  source $ZSH/oh-my-zsh.sh
+fi
+
+# -----------------------------
+# Configuración específica
+# -----------------------------
+
+# Manjaro
 if [[ "$DISTRO" == "manjaro" ]]; then
-  # Has weird character width
-  # Example:
-  #    is not a diamond
   HAS_WIDECHARS="false"
-  # Source manjaro-zsh-configuration
+
   if [[ -e /usr/share/zsh/manjaro-zsh-config ]]; then
     source /usr/share/zsh/manjaro-zsh-config
   fi
-  # Use manjaro zsh prompt
+
   if [[ -e /usr/share/zsh/manjaro-zsh-prompt ]]; then
     source /usr/share/zsh/manjaro-zsh-prompt
   fi
 fi
+
