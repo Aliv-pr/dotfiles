@@ -20,35 +20,63 @@ Actualmente incluye configuración para:
 
 # Requisitos (Dependencies)
 
-Antes de instalar los dotfiles es necesario tener instaladas algunas herramientas.
+Antes de instalar los dotfiles es necesario instalar algunas herramientas.
 
-## Zsh
+---
 
-Instalar **Oh My Zsh**
+# Zsh
+
+## Instalar Oh My Zsh
 
 ```bash
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ```
 
-Plugins utilizados:
+---
+
+## Plugins utilizados
+
+La configuración de Zsh utiliza los siguientes plugins:
 
 * `git`
-
-Tema utilizado:
-
-* `eastwood`
+* `zsh-autosuggestions`
+* `zsh-syntax-highlighting`
 
 ---
 
-## Tmux
+## Instalar plugins
 
-Instalar **TPM (Tmux Plugin Manager)**
+```bash
+git clone --depth 1 https://github.com/zsh-users/zsh-autosuggestions \
+${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+```
+
+```bash
+git clone --depth 1 https://github.com/zsh-users/zsh-syntax-highlighting \
+${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+```
+
+---
+
+## Tema utilizado
+
+Tema de Oh My Zsh:
+
+```
+eastwood
+```
+
+---
+
+# Tmux
+
+## Instalar TPM (Tmux Plugin Manager)
 
 ```bash
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ```
 
-Plugins utilizados:
+Plugins utilizados:j
 
 * `tmux-plugins/tpm`
 * `catppuccin/tmux`
@@ -59,11 +87,15 @@ Plugins utilizados:
 
 Este repositorio utiliza la técnica de **bare repository** para administrar dotfiles.
 
+---
+
 ## 1 Clonar repositorio
 
 ```bash
 git clone --bare https://github.com/Aliv-pr/dotfiles.git $HOME/.dotfiles
 ```
+
+---
 
 ## 2 Crear alias para administrar dotfiles
 
@@ -71,11 +103,15 @@ git clone --bare https://github.com/Aliv-pr/dotfiles.git $HOME/.dotfiles
 alias dotfiles='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 ```
 
+---
+
 ## 3 Ocultar archivos no rastreados
 
 ```bash
 dotfiles config --local status.showUntrackedFiles no
 ```
+
+---
 
 ## 4 Aplicar configuración
 
@@ -83,13 +119,21 @@ dotfiles config --local status.showUntrackedFiles no
 dotfiles checkout
 ```
 
-Si existen conflictos con archivos existentes:
+---
+
+## Resolver conflictos (si existen)
+
+Si ya existen archivos en el sistema que entren en conflicto:
 
 ```bash
 mkdir -p .dotfiles-backup
+```
 
+```bash
 dotfiles checkout 2>&1 | grep -E "\s+\." | awk '{print $1}' | xargs -I{} mv {} .dotfiles-backup/{}
+```
 
+```bash
 dotfiles checkout
 ```
 
@@ -112,6 +156,8 @@ Archivo:
 ```
 .zshrc
 ```
+
+---
 
 ## Características
 
@@ -177,29 +223,39 @@ Archivo:
 
 ---
 
-## Cambios principales
-
-### Prefijo
+## Prefijo
 
 El prefijo por defecto cambia de:
 
 ```
-C-b → C-s
+C-b
+```
+
+a:
+
+```
+C-s
 ```
 
 ---
 
-### Recargar configuración
+## Recargar configuración
+
+Permite recargar `.tmux.conf` sin reiniciar tmux.
 
 ```
 prefix + r
 ```
 
-Permite recargar `.tmux.conf` sin reiniciar tmux.
+Ejemplo:
+
+```
+Ctrl+s r
+```
 
 ---
 
-### Navegación entre paneles
+## Navegación entre paneles
 
 Movimiento estilo **Vim**:
 
@@ -212,7 +268,7 @@ prefix + l   mover derecha
 
 ---
 
-### Splits
+## Splits
 
 Los paneles se crean manteniendo el directorio actual.
 
@@ -230,21 +286,37 @@ prefix + |
 
 ---
 
-### Mouse
+## Instalación de plugins
 
-El soporte de mouse está habilitado.
+Instalar plugins de tmux con:
+
+```
+prefix + I
+```
 
 ---
 
-### Terminal
+# Mouse
 
-Se utiliza:
+El soporte de mouse está habilitado en tmux.
+
+Esto permite:
+
+* seleccionar paneles con el mouse
+* redimensionar paneles
+* seleccionar texto
+
+---
+
+# Terminal
+
+La configuración usa:
 
 ```
 tmux-256color
 ```
 
-Para mejorar compatibilidad con colores.
+para mejorar la compatibilidad con colores.
 
 ---
 
@@ -306,158 +378,3 @@ dotfiles push
 
 Mantener un entorno reproducible entre diferentes sistemas sin duplicar configuraciones.
 
-# Configuración de teclado
-
-Esta sección documenta los cambios de teclado importantes introducidos por la configuración.
-
----
-
-# Tmux Keybindings
-
-## Prefijo
-
-El prefijo por defecto de tmux cambia de:
-
-```
-Ctrl + b
-```
-
-a:
-
-```
-Ctrl + s
-```
-
-Esto permite acceder más fácilmente a los comandos de tmux.
-
----
-
-## Recargar configuración
-
-Recargar `.tmux.conf` sin reiniciar tmux.
-
-```
-prefix + r
-```
-
-Ejemplo:
-
-```
-Ctrl+s r
-```
-
----
-
-## Navegación entre paneles
-
-La navegación entre paneles sigue el estilo **Vim**.
-
-| Acción               | Teclas       |
-| -------------------- | ------------ |
-| Mover a la izquierda | `prefix + h` |
-| Mover abajo          | `prefix + j` |
-| Mover arriba         | `prefix + k` |
-| Mover a la derecha   | `prefix + l` |
-
-Ejemplo:
-
-```
-Ctrl+s h
-```
-
----
-
-## Crear paneles (splits)
-
-Los paneles se crean manteniendo el directorio actual.
-
-| Acción           | Teclas        |
-| ---------------- | ------------- |
-| Split horizontal | `prefix + -`  |
-| Split vertical   | `prefix + \|` |
-
-Ejemplo:
-
-```
-Ctrl+s -
-```
-
----
-
-## Instalación de plugins
-
-Instalar plugins de tmux con:
-
-```
-prefix + I
-```
-
----
-
-# Mouse
-
-El soporte de mouse está habilitado en tmux.
-
-Esto permite:
-
-* seleccionar paneles con el mouse
-* redimensionar paneles
-* seleccionar texto
-
----
-
-# Terminal
-
-La configuración usa:
-
-```
-tmux-256color
-```
-
-para mejorar la compatibilidad con colores.
-
----
-
-# Tema
-
-El tema utilizado es **Catppuccin (Mocha)** con:
-
-* barra de estado superior
-* ventanas con estilo redondeado
-* módulos de estado para sesión y aplicación
-
----
-
-# Plugins usados
-
-## Tmux
-
-```
-tmux-plugins/tpm
-catppuccin/tmux
-```
-
-## Zsh
-
-```
-git
-```
-
----
-
-# Alias importantes
-
-Alias para administrar los dotfiles:
-
-```
-alias dotfiles='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
-```
-
-Uso:
-
-```
-dotfiles status
-dotfiles add .
-dotfiles commit
-dotfiles push
-```

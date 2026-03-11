@@ -25,6 +25,8 @@ ZSH_THEME="eastwood"
 
 plugins=(
   git
+  zsh-autosuggestions
+  zsh-syntax-highlighting
 )
 
 if [[ -d "$ZSH" ]]; then
