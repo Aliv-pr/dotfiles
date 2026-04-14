@@ -40,6 +40,7 @@ fi
 # Manjaro
 if [[ "$DISTRO" == "manjaro" ]]; then
   HAS_WIDECHARS="false"
+  export PATH="$HOME/.local/bin:$PATH"
 fi
 
 # Fedora
